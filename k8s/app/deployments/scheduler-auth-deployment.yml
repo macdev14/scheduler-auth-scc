@@ -14,25 +14,15 @@ spec:
     spec:
       containers:
         - name: app
-          image: lmtp/scheduler-app:v01
+          image: lmtp/scheduler-auth:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 2002
           volumeMounts:
             - name: uploads-storage
               mountPath: /uploads 
-          env:
-            - name: POSTGRES_HOST
-              value: "postgres"
-            - name: POSTGRES_DB
-              value: "mydatabase"
-            - name: POSTGRES_USER
-              value: "admin"
-            - name: POSTGRES_PASSWORD
-              value: "admin"
-            - name: MONGO_HOST
-              value: "mongo"
-            - name: MONGO_PORT
-              value: "27017"
+          envFrom:
+            - configMapRef:
+                name: env-config-scheduler
           resources:
             requests:
               memory: "256Mi"
@@ -54,6 +44,6 @@ spec:
     app: scheduller-auth
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 2002
+      targetPort: 2002
   type: LoadBalancer

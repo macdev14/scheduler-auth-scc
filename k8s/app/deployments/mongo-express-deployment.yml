@@ -14,12 +14,14 @@ spec:
     spec:
       containers:
         - name: mongo-express
-          image: lmtp/custom-mongo-express:v01
+          image: cmerbruno/custom-mongo-express:v01
           ports:
             - containerPort: 8081
           env:
             - name: ME_CONFIG_MONGODB_SERVER
               value: "mongo"
+            - name: ME_CONFIG_MONGODB_PORT
+              value: "27017" 
             - name: ME_CONFIG_BASICAUTH_USERNAME
               value: "admin"
             - name: ME_CONFIG_BASICAUTH_PASSWORD
