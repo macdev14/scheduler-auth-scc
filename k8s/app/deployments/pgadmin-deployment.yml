@@ -46,7 +46,6 @@ spec:
   selector:
     app: pgadmin
   type: NodePort
-  # type: LoadBalancer 
   ports:
     - protocol: TCP
       port: 5505           
