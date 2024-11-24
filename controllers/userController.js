@@ -259,7 +259,7 @@ exports.unblockUser = async (req, res) => { // the route itselfdoesn't actually 
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY || "secret");
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
         const user = await User.findOne({ username: decoded.username });
 
         if (!user) {
@@ -306,7 +306,7 @@ exports.editUser = [ upload.single('profilePicture'), // Middleware for file upl
         }
 
         try {
-            const decoded = jwt.verify(token, process.env.SECRET_KEY || "secret");
+            const decoded = jwt.verify(token, process.env.SECRET_KEY);
             const user = await User.findOne({ username: decoded.username });
 
             if (!user) {
