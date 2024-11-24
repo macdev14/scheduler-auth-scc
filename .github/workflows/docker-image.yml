@@ -44,4 +44,4 @@ jobs:
         run: |
           IMAGE_TAG="lmtp/scheduler-auth:${GITHUB_SHA}"
           docker push $IMAGE_TAG
-          docker push lmtp/scheduler-auth:latest
+          docker push lmtp/scheduler-auth
