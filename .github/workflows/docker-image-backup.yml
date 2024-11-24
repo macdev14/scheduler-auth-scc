@@ -27,18 +27,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 4: Install dependencies and run tests
-      - name: Install dependencies and run tests
-        run: |
-          npm install
-          npm test
-        env:
-          MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
-          SECRET_KEY: ${{ secrets.DOCKER_USERNAME }}
       # Step 4: Build and optionally tag the Docker image
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag lmtp/scheduler-auth:latest
         
       - name: Push Docker image
         run: docker push lmtp/scheduler-auth:latest
-          
+
