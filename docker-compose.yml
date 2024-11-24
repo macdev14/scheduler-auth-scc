@@ -24,8 +24,8 @@ services:
         target: /data/db
         
   mongo-express:
-    image: mongo-express
-    container_name: mongo-express-k8s
+    image: cmerbruno/custom-mongo-express:v02
+    container_name: olamundo
     restart: always
     ports:
       - "2001:8081"

@@ -4,3 +4,4 @@ k8s/aula
 k8s/testes
 uploads
 env-config-scheduler.env
+env-config-scheduler-requisition.env
