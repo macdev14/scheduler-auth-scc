@@ -45,10 +45,9 @@ metadata:
 spec:
   selector:
     app: pgadmin
-  # type: NodePort
-  type: LoadBalancer 
+  type: NodePort
   ports:
     - protocol: TCP
       port: 5505           
       targetPort: 80     
-      # nodePort: 31002    
+      nodePort: 31002    
