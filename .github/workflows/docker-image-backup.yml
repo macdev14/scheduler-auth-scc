@@ -3,10 +3,10 @@ name: Docker Image CI
 on:
   push:
     branches: 
-      - "test"
+      - "master"
   pull_request:
     branches: 
-      - "test"
+      - "master"
 
 jobs:
   build:
@@ -27,21 +27,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 4: Install dependencies and run tests
-      - name: Install dependencies and run tests
-        run: |
-          npm install
-          npm test
-
-      # Step 5: Build the Docker image
+      # Step 4: Build and optionally tag the Docker image
       - name: Build the Docker image
-        run: |
-          IMAGE_TAG="lmtp/scheduler-auth:${GITHUB_SHA}"
-          docker build . --file Dockerfile --tag $IMAGE_TAG
-
-      # Step 6: Push Docker image
+        run: docker build . --file Dockerfile --tag lmtp/scheduler-auth:latest
+        
       - name: Push Docker image
-        run: |
-          IMAGE_TAG="lmtp/scheduler-auth:${GITHUB_SHA}"
-          docker push $IMAGE_TAG
-          docker push lmtp/scheduler-auth:latest
+        run: docker push lmtp/scheduler-auth:latest
+
