@@ -34,7 +34,7 @@ jobs:
           npm test
         env:
           MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
-          SECRET_KEY: ${{ secrets.MONGO_CONNECTION_STRING }}
+          SECRET_KEY: ${{ secrets.DOCKER_USERNAME }}
       # Step 5: Build the Docker image
       - name: Build the Docker image
         run: |
