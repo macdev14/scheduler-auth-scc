@@ -32,7 +32,9 @@ jobs:
         run: |
           npm install
           npm test
-
+        env:
+          MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
+          SECRET_KEY: ${{ secrets.MONGO_CONNECTION_STRING }}
       # Step 5: Build the Docker image
       - name: Build the Docker image
         run: |
@@ -44,4 +46,4 @@ jobs:
         run: |
           IMAGE_TAG="lmtp/scheduler-auth:${GITHUB_SHA}"
           docker push $IMAGE_TAG
-          docker push lmtp/scheduler-auth
+          
