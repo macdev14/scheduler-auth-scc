@@ -117,3 +117,13 @@ exports.getByUsername = async ({userGetUserByUsername}, {token, username}) => {
         return ({ status: 500, message: "Something went wrong" });
     }
 }   
+
+exports.getAll = async ({userGetAll}, {token}) => {
+    try {
+        const user = await userGetAll(token);
+        return user;
+    } catch (error) {
+        console.log("error", error);
+        return ({ status: 500, message: "Something went wrong" });
+    }
+}   

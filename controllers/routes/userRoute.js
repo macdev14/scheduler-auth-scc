@@ -5,6 +5,7 @@ const { userDeletePersistence } = require("../../use-cases/userDeletePersistence
 const { userUnblockPersistence } = require("../../use-cases/userUnblockPersistence");
 const { userEditPersistence } = require("../../use-cases/userEditPersistence");
 const { userGetUserByUsername } = require("../../use-cases/userGetUserByUsername");
+const { userGetAll } = require("../../use-cases/userGetAll");
 const userInteractorMongoDB = require("../../use-cases/userInteractorMongoDB");
 const multer = require('multer');
 const path = require("path");
@@ -181,6 +182,18 @@ router.route('/user/getByUsername').get(async (req, res) => {
         res.status(user.status).send(user);
     } catch (error) {
         console.error("Error in get user by username route:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+});
+
+
+router.route('/user/getAll').get(async (req, res) => {
+    const token = req.headers['token']
+    try {
+        const user = await userInteractorMongoDB.getAll({userGetAll}, {token});
+        res.status(user.status).send(user);
+    } catch (error) {
+        console.error("Error in get all users route:", error);
         res.status(500).send({ message: "Internal server error" });
     }
 });
