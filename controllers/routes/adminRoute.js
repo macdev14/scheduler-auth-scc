@@ -1,5 +1,5 @@
 const { adminCreateRolePersistence } = require("../../use-cases/adminCreateRolePersistence");
-const { adminCreateRolesPersistence } = require("../../use-cases/adminCreateRolesPersistence");
+const { adminGetRoles } = require("../../use-cases/adminGetRoles");
 const adminInteractorMongoDB = require("../../use-cases/adminInteractorMongoDB");
 const router = require("express").Router();
 
@@ -19,17 +19,18 @@ router.route('/admin/role/create').post(
     }
 )
 
-router.route('/admin/roles/create').post(
+router.route('/admin/role/getAll').get(
     async (req, res) => {
+        const token = req.headers['token'];
         try {
-            const role = await adminInteractorMongoDB.createRoles({adminCreateRolesPersistence},{});
-            // Respond with success
-            res.status(201).send({ message: 'Roles seeded successfully.' });
+            const roles = await adminInteractorMongoDB.getRoles({adminGetRoles},{token});
+            res.status(roles.status).send(roles);
         } catch (error) {
-            console.error('Error seeding roles:', error);
-            res.status(500).send({ message: 'Error seeding roles.', error: error.message });
+            console.error("Error in get all roles route:", error);
+            res.status(500).send({ message: "Internal server error" });
         }
     }
-)
+);
+
 
 module.exports = router;

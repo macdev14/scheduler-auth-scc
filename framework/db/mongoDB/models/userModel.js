@@ -1,5 +1,6 @@
 'use strict';
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 //database schema
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -10,7 +11,7 @@ const UserSchema = new Schema({
     register_date: { type: Date, required: true, default: Date.now }, 
     last_sign_in: { type: Date, required: true, default: Date.now }, 
     document_name: { type: String },
-    roles: [{ type: String, ref: 'Role' }],
+    role: { type: String, ref: 'Role' },
     active: { type: Boolean, required: true, default: true }
 },{collection:'users'});
 
@@ -18,11 +19,11 @@ UserSchema.statics.seedAdminUser = async function () {
     try {
         const adminUser = {
             username: 'admin',
-            password: await bcrypt.hash('admin_password', 10),
+            password: await bcrypt.hash(process.env.SALT + 'admin_password', 10),
             email: 'admin@alunos.ipca.pt',
             register_date: new Date(),
             last_sign_in: new Date(),
-            roles: ['admin'],
+            role: 'admin',
             active: true
         };
 

@@ -7,7 +7,9 @@ const mongoose = require("mongoose");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./public/apidocjs/swagger.json');
 const { userCreateAdminPersistence } = require("./use-cases/userCreateAdminPersistence");
+const { adminCreateRolesPersistence } = require("./use-cases/adminCreateRolesPersistence");
 const userInteractorMongoDB = require("./use-cases/userInteractorMongoDB");
+const adminInteractorMongoDB = require("./use-cases/adminInteractorMongoDB");
 
 
 
@@ -22,6 +24,8 @@ mongoose.connect(uri).then(() => {
         try {
             const user = await userInteractorMongoDB.userCreateAdmin({ userCreateAdminPersistence }, {});
             console.log(user);
+            const role = await adminInteractorMongoDB.createRoles({adminCreateRolesPersistence},{});
+            console.log(role);
         } catch (err) {
             console.log(err);
         }
