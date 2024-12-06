@@ -34,3 +34,13 @@ exports.getRoles = async ({adminGetRoles}, {token}) => {
     }
 }
 
+exports.getRole = async ({adminGetRoleById}, {token, id}) => {
+    try {
+        const roles = await adminGetRoleById({token, id});
+        return roles;
+    } catch (error) {
+        console.log(error);
+        return ({ status: 500, message: "Something went wrong: "  + error});
+    }
+}
+

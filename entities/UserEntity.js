@@ -3,7 +3,6 @@ const Role = require('../framework/db/mongoDB/models/roleModel');
 
 exports.UserEntity = class UserEntity {
     constructor(user) {
-        this.id = user.id;
         this.username = user.username;
         this.password = user.password;
         this.email = this.email || `${this.username}@gmail.com`;

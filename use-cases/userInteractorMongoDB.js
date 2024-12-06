@@ -3,6 +3,7 @@
 const {UserEntity} = require("../entities/UserEntity");
 const {UserStateEntity} = require("../entities/UserStateEntity");
 const {JwtUserEntity} = require("../entities/JwtUserEntity");
+const {UserJwtEntity} = require("../entities/UserJwtEntity");
 
 exports.login = async ({userLoginPersistence}, {username, password}) => {
     try {
@@ -101,6 +102,16 @@ exports.userEdit = async ({userEditPersistence}, {token, email, first_name, last
         const user = new UserEntity({token, email, first_name, last_name, birthdate, profilePicture});
         const edituser = await userEditPersistence(user);
         return edituser;
+    } catch (error) {
+        console.log("error", error);
+        return ({ status: 500, message: "Something went wrong" });
+    }
+}   
+exports.getByUsername = async ({userGetUserByUsername}, {token, username}) => {
+    try {
+        const userjwt = new UserJwtEntity({token, username});
+        const user = await userGetUserByUsername(userjwt);
+        return user;
     } catch (error) {
         console.log("error", error);
         return ({ status: 500, message: "Something went wrong" });

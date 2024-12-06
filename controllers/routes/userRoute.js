@@ -4,6 +4,7 @@ const { userChangepwdPersistence } = require("../../use-cases/userChangepwdPersi
 const { userDeletePersistence } = require("../../use-cases/userDeletePersistence");
 const { userUnblockPersistence } = require("../../use-cases/userUnblockPersistence");
 const { userEditPersistence } = require("../../use-cases/userEditPersistence");
+const { userGetUserByUsername } = require("../../use-cases/userGetUserByUsername");
 const userInteractorMongoDB = require("../../use-cases/userInteractorMongoDB");
 const multer = require('multer');
 const path = require("path");
@@ -167,6 +168,19 @@ router.route('/user/edit').put(upload.single('profilePicture'), async (req, res)
         res.status(user.status).send(user);
     } catch (error) {
         console.error("Error in edit user route:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+});
+
+
+router.route('/user/getByUsername').get(async (req, res) => {
+    const {username} = req.body;
+    const token = req.headers['token']
+    try {
+        const user = await userInteractorMongoDB.getByUsername({userGetUserByUsername}, {token, username});
+        res.status(user.status).send(user);
+    } catch (error) {
+        console.error("Error in get user by username route:", error);
         res.status(500).send({ message: "Internal server error" });
     }
 });

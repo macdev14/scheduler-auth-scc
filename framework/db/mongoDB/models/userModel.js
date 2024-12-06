@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
+    first_name: { type: String},
+    last_name: { type: String},
     password: { type: String, required: true },
     email: { type: String},
     register_date: { type: Date, required: true, default: Date.now }, 
@@ -19,6 +21,8 @@ UserSchema.statics.seedAdminUser = async function () {
     try {
         const adminUser = {
             username: 'admin',
+            first_name: 'Admin',
+            last_name: 'Aluno',
             password: await bcrypt.hash(process.env.SALT + 'admin_password', 10),
             email: 'admin@alunos.ipca.pt',
             register_date: new Date(),

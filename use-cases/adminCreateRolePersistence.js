@@ -17,7 +17,7 @@ exports.adminCreateRolePersistence = async (role) => {
 
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         if (decoded.role !== "admin") {
-            return ({status: 403, message: "Access denied. Admins only."});   //preciso de criar o role de admin primeiro
+            return ({status: 403, message: "Access denied. Admins only."});   
         }
         
         const _id = id
