@@ -17,9 +17,9 @@ exports.userCreatePersistence = async (user) => {
 
     try {
         const salt = process.env.SALT;
-        const passwordHash = await bcryptjs.hash(salt + password, 10); // 10 salt rounds
+        const passwordHash = await bcryptjs.hash(salt + password, 10); 
         console.log("password hash", passwordHash);
-        const response = await User.create({username, password: passwordHash});
+        const response = await User.create({username, password: passwordHash, email: `${username}@alunos.ipca.pt`, role: "external"});
         console.log("response", response);
         return ({ status: 200, message: "User created successfully" });
     } catch (error) {

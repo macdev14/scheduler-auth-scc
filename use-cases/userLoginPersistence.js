@@ -22,7 +22,7 @@ exports.userLoginPersistence = async (user) => {
         if (!isMatch) {
             return ({status:400, message:"Password is incorrect"});
         }
-        const token = jwt.sign({id: userfind._id, username: userfind.username}, process.env.SECRET_KEY, {expiresIn: "1d"});
+        const token = jwt.sign({id: userfind._id, username: userfind.username, role: userfind.role}, process.env.SECRET_KEY, {expiresIn: "1d"});
         console.log("token:", token);
         return ({status:200, message:"user logged in successfully", token});
     }

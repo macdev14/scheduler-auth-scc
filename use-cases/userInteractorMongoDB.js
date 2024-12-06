@@ -34,6 +34,18 @@ exports.register = async ({userCreatePersistence}, {username, password}) => {
         return ({ status: 500, message: "Something went wrong" });
     }
 }
+exports.userCreateAdmin = async ({userCreateAdminPersistence}, {}) => {
+    try {
+        const registeruser = await userCreateAdminPersistence();
+        return registeruser;
+    } catch (error) {
+        console.log("error", error);
+        if (error.code === 11000) {
+            return ({ status: 400, message: "user already exists" });
+        }
+        return ({ status: 500, message: "Something went wrong" });
+    }
+}
 
 exports.changepwd = async ({userChangepwdPersistence}, {token, oldPassword, newPassword}) => {
     try {

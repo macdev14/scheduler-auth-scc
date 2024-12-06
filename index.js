@@ -6,6 +6,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./public/apidocjs/swagger.json');
+const { userCreateAdminPersistence } = require("./use-cases/userCreateAdminPersistence");
+const userInteractorMongoDB = require("./use-cases/userInteractorMongoDB");
 
 
 
@@ -16,6 +18,15 @@ let uri=process.env.MONGO_CONNECTION_STRING;
 //database connection
 mongoose.connect(uri).then(() => {
     console.log("Connected to the database");
+    (async () => {
+        try {
+            const user = await userInteractorMongoDB.userCreateAdmin({ userCreateAdminPersistence }, {});
+            console.log(user);
+        } catch (err) {
+            console.log(err);
+        }
+    })();
+    // res.status(user.status).send(user);
 }).catch((err) => {
     console.log(err);
 })
@@ -29,6 +40,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); //serve api documentation
 app.use('/api-docjs', express.static('./public/apidocjs')); 
 app.use("/api", require("./controllers/routes/userRoute")); //user route
+app.use("/api", require("./controllers/routes/adminRoute")); //admin route
 
 app.listen(port, () => {
     console.log("Server running on port: " + port);

@@ -1,11 +1,12 @@
 const bcryptjs = require('bcryptjs');
+const Role = require('../framework/db/mongoDB/models/roleModel');
 
 exports.UserEntity = class UserEntity {
     constructor(user) {
         this.id = user.id;
         this.username = user.username;
         this.password = user.password;
-        this.email = user.email || null;
+        this.email = this.email || `${this.username}@gmail.com`;
         this.first_name = user.first_name || null;
         this.last_name = user.last_name || null;
         this.register_date = user.register_date || new Date();
@@ -14,6 +15,7 @@ exports.UserEntity = class UserEntity {
         this.document_name = user.document_name || null;
         this.active = user.active !== undefined ? user.active : true;
         this.token = user.token || null;
+        this.role = user.role
 }
 
 async validator() {
