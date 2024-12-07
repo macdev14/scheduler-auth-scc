@@ -2,8 +2,6 @@
 const mongoose = require("mongoose");
 require("../framework/db/mongoDB/models/roleModel");
 const Role = mongoose.model("Role");
-const jwt = require("jsonwebtoken");
-require('dotenv').config();
 
 
 exports.adminCreateRolesPersistence = async () => {

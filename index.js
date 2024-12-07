@@ -30,7 +30,7 @@ mongoose.connect(uri).then(() => {
             console.log(err);
         }
     })();
-    // res.status(user.status).send(user);
+    
 }).catch((err) => {
     console.log(err);
 })
