@@ -16,12 +16,12 @@ spec:
         - name: mongo-express-auth
           image: cmerbruno/custom-mongo-express:v01
           ports:
-            - containerPort: 2032
+            - containerPort: 8081
           env:
             - name: ME_CONFIG_MONGODB_SERVER
-              value: "mongo"
+              value: "mongo-auth"
             - name: ME_CONFIG_MONGODB_PORT
-              value: "27017" 
+              value: "2031" 
             - name: ME_CONFIG_BASICAUTH_USERNAME
               value: "admin"
             - name: ME_CONFIG_BASICAUTH_PASSWORD
@@ -49,5 +49,5 @@ spec:
   ports:
     - protocol: TCP
       port: 2032         
-      targetPort: 2032  
+      targetPort: 8081  
       nodePort: 31032    

@@ -19,9 +19,9 @@ spec:
             - containerPort: 2036
           env:
             - name: ME_CONFIG_MONGODB_SERVER
-              value: "mongo"
+              value: "mongo-requisition"
             - name: ME_CONFIG_MONGODB_PORT
-              value: "27017" 
+              value: "8081" 
             - name: ME_CONFIG_BASICAUTH_USERNAME
               value: "admin"
             - name: ME_CONFIG_BASICAUTH_PASSWORD
@@ -49,5 +49,5 @@ spec:
   ports:
     - protocol: TCP
       port: 2036         
-      targetPort: 2036  
+      targetPort: 8081  
       nodePort: 31036    

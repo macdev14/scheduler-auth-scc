@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: scheduler-auth
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: scheduler-auth
@@ -25,10 +25,10 @@ spec:
                 name: env-config-scheduler-auth
           resources:
             requests:
-              memory: "25Mi"
-              cpu: "100m"
+              memory: "256Mi"
+              cpu: "500m"
             limits:
-              memory: "50Mi"
+              memory: "512Mi"
               cpu: "1"
       volumes:
         - name: uploads-storage

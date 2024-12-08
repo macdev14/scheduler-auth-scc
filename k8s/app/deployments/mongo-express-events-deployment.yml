@@ -16,12 +16,12 @@ spec:
         - name: mongo-express-events
           image: cmerbruno/custom-mongo-express:v01
           ports:
-            - containerPort: 2034
+            - containerPort: 8081
           env:
             - name: ME_CONFIG_MONGODB_SERVER
-              value: "mongo"
+              value: "mongo-events"
             - name: ME_CONFIG_MONGODB_PORT
-              value: "27017" 
+              value: "2033" 
             - name: ME_CONFIG_BASICAUTH_USERNAME
               value: "admin"
             - name: ME_CONFIG_BASICAUTH_PASSWORD
@@ -49,5 +49,5 @@ spec:
   ports:
     - protocol: TCP
       port: 2034         
-      targetPort: 2034  
+      targetPort: 8081  
       nodePort: 31034    

@@ -16,7 +16,7 @@ spec:
         - name: mongo-requisition
           image: cmerbruno/custom-mongo:v01
           ports:
-            - containerPort: 2035
+            - containerPort: 27017
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: "mongoadmin"
@@ -47,5 +47,5 @@ spec:
   ports:
     - protocol: TCP
       port: 2035
-      targetPort: 2035
+      targetPort: 27017
   type: ClusterIP

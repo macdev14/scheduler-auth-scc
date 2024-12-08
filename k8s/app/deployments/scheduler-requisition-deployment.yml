@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: scheduler-requisition
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: scheduler-requisition
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: lmtp/scheduler-requisition:latest
+          image: lmtp/scheduler-requisicoes:latest
           ports:
             - containerPort: 3023
           volumeMounts:
@@ -25,10 +25,10 @@ spec:
                 name: env-config-scheduler-requisition
           resources:
             requests:
-              memory: "25Mi"
-              cpu: "100m"
+              memory: "256Mi"
+              cpu: "500m"
             limits:
-              memory: "50Mi"
+              memory: "512Mi"
               cpu: "1"
       volumes:
         - name: uploads-storage
