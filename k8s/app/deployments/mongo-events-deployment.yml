@@ -1,51 +1,51 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo
+  name: mongo-events
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongo
+      app: mongo-events
   template:
     metadata:
       labels:
-        app: mongo
+        app: mongo-events
     spec:
       containers:
-        - name: mongo
+        - name: mongo-events
           image: cmerbruno/custom-mongo:v01
           ports:
-            - containerPort: 27017
+            - containerPort: 2033
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: "mongoadmin"
             - name: MONGO_INITDB_ROOT_PASSWORD
               value: "mongoadmin"
           volumeMounts:
-            - name: mongo-data
+            - name: mongo-data-events
               mountPath: /data/db
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "500m"
+              memory: "128Mi"
+              cpu: "250m"
             limits:
-              memory: "1Gi"
-              cpu: "1"
+              memory: "256Mi"
+              cpu: "500m"
       volumes:
-        - name: mongo-data
+        - name: mongo-data-events
           persistentVolumeClaim:
-            claimName: mongo-data-pvc
+            claimName: mongo-data-events-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: mongo-events
 spec:
   selector:
-    app: mongo
+    app: mongo-events
   ports:
     - protocol: TCP
-      port: 27017
-      targetPort: 27017
+      port: 2033
+      targetPort: 2033
   type: ClusterIP

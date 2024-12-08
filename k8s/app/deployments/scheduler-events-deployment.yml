@@ -1,28 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scheduler-auth
+  name: scheduler-events
 spec:
   replicas: 5
   selector:
     matchLabels:
-      app: scheduler-auth
+      app: scheduler-events
   template:
     metadata:
       labels:
-        app: scheduler-auth
+        app: scheduler-events
     spec:
       containers:
         - name: app
-          image: lmtp/scheduler-auth:latest
+          image: lmtp/scheduler-events:latest
           ports:
-            - containerPort: 3021
-          volumeMounts:
-            - name: uploads-storage
-              mountPath: /uploads 
+            - containerPort: 3022
           envFrom:
             - configMapRef:
-                name: env-config-scheduler-auth
+                name: env-config-scheduler-events
           resources:
             requests:
               memory: "25Mi"
@@ -30,20 +27,16 @@ spec:
             limits:
               memory: "50Mi"
               cpu: "1"
-      volumes:
-        - name: uploads-storage
-          persistentVolumeClaim:
-            claimName: scheduler-auth-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: scheduler-auth-service
+  name: scheduler-events-service
 spec:
   selector:
-    app: scheduler-auth
+    app: scheduler-events
   ports:
     - protocol: TCP
-      port: 3021
-      targetPort: 3021
+      port: 3022
+      targetPort: 3022
   type: LoadBalancer

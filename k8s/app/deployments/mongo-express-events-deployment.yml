@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo-express
+  name: mongo-express-events
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: mongo-express
+      app: mongo-express-events
   template:
     metadata:
       labels:
-        app: mongo-express
+        app: mongo-express-events
     spec:
       containers:
-        - name: mongo-express
+        - name: mongo-express-events
           image: cmerbruno/custom-mongo-express:v01
           ports:
-            - containerPort: 8081
+            - containerPort: 2034
           env:
             - name: ME_CONFIG_MONGODB_SERVER
               value: "mongo"
@@ -41,13 +41,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo-express
+  name: mongo-express-events
 spec:
   selector:
-    app: mongo-express
+    app: mongo-express-events
   type: NodePort 
   ports:
     - protocol: TCP
-      port: 8081         
-      targetPort: 8081  
-      nodePort: 31001    
+      port: 2034         
+      targetPort: 2034  
+      nodePort: 31034    
