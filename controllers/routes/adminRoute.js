@@ -5,6 +5,17 @@ const { adminAssignRole } = require("../../use-cases/adminAssignRole");
 const adminInteractorMongoDB = require("../../use-cases/adminInteractorMongoDB");
 const router = require("express").Router();
 
+/**
+ * @api {post} /admin/role/create Create Role
+ * @apiName CreateRole
+ * @apiGroup Admin
+ * @apiParam {String} id Role ID
+ * @apiParam {String} description Role description
+ * @apiParam {Array} permissions Role permissions
+ * @apiParam {String} token JSON Web Token that can be used to authenticate
+ * @apiSuccess {Object} role Created role details
+ * @apiError {String} message Error message
+ */
 router.route('/admin/role/create').post(
     async (req, res) => {
         const {id, description, permissions} = req.body;
@@ -21,6 +32,14 @@ router.route('/admin/role/create').post(
     }
 )
 
+/**
+ * @api {get} /admin/role/getAll Get All Roles
+ * @apiName GetAllRoles
+ * @apiGroup Admin
+ * @apiParam {String} token JSON Web Token that can be used to authenticate
+ * @apiSuccess {Array} roles List of roles
+ * @apiError {String} message Error message
+ */
 router.route('/admin/role/getAll').get(
     async (req, res) => {
         const token = req.headers['token'];
@@ -34,7 +53,16 @@ router.route('/admin/role/getAll').get(
     }
 );
 
-
+/**
+ * @api {post} /admin/role/assign Assign Role
+ * @apiName AssignRole
+ * @apiGroup Admin
+ * @apiParam {String} username Username
+ * @apiParam {String} role Role ID
+ * @apiParam {String} token JSON Web Token that can be used to authenticate
+ * @apiSuccess {Object} message Role assignment message
+ * @apiError {String} message Error message
+ */
 router.route('/admin/role/assign').post(
     async (req, res) => {
         const {username, role} = req.body;
@@ -49,6 +77,15 @@ router.route('/admin/role/assign').post(
     }
 );
 
+/**
+ * @api {get} /admin/role/get Get Role by ID
+ * @apiName GetRoleById
+ * @apiGroup Admin
+ * @apiParam {String} id Role ID
+ * @apiParam {String} token JSON Web Token that can be used to authenticate
+ * @apiSuccess {Object} role Role details
+ * @apiError {String} message Error message
+ */
 router.route('/admin/role/get').get(
     async (req, res) => {
         const token = req.headers['token'];
