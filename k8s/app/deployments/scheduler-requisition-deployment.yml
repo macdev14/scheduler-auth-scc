@@ -17,9 +17,6 @@ spec:
           image: lmtp/scheduler-requisicoes:latest
           ports:
             - containerPort: 3023
-          volumeMounts:
-            - name: uploads-storage
-              mountPath: /uploads 
           envFrom:
             - configMapRef:
                 name: env-config-scheduler-requisition
@@ -30,10 +27,6 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "1"
-      volumes:
-        - name: uploads-storage
-          persistentVolumeClaim:
-            claimName: scheduler-requisition-pvc
 ---
 apiVersion: v1
 kind: Service
