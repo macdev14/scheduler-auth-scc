@@ -46,6 +46,11 @@ app.use('/api-docjs', express.static('./public/apidocjs'));
 app.use("/api", require("./controllers/routes/userRoute")); //user route
 app.use("/api", require("./controllers/routes/adminRoute")); //admin route
 
+
+app.get("/", (req, res) => {
+    res.send("Hello, World!");
+});
+  
 app.listen(port, () => {
     console.log("Server running on port: " + port);
 })
