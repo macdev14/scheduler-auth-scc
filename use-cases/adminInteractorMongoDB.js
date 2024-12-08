@@ -43,4 +43,13 @@ exports.getRole = async ({adminGetRoleById}, {token, id}) => {
         return ({ status: 500, message: "Something went wrong: "  + error});
     }
 }
+exports.assignRole = async ({adminAssignRole}, {username, role, token}) => {
+    try {
+        const assignrole = await adminAssignRole({username, role, token});
+        return assignrole;
+    } catch (error) {
+        console.log(error);
+        return ({ status: 500, message: "Something went wrong: "  + error});
+    }
+}
 

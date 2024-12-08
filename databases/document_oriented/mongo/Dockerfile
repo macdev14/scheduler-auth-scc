@@ -4,4 +4,4 @@ EXPOSE 27017
 
 RUN mkdir -p /workspace /data/db
 
-CMD ["mongod"]
+CMD ["mongod", "--replSet", "rs0", "--bind_ip_all"]

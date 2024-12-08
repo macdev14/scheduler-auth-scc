@@ -10,7 +10,6 @@ services:
     ports:
       - "2031:27017"
     volumes:
-      - ./workspace:/workspace
       - type: volume
         source: mongodb_data_volume
         target: /data/db
