@@ -11,6 +11,10 @@ exports.userLoginPersistence = async (user) => {
     console.log('user', user);
     const { username, password } = user;
     try {
+        if (!username || !password) {
+            return ({status: 400, message: "username and password are required"});
+        }
+
         const userfind = await User.findOne({username}); //return a simple document json
         if (!userfind) {
             //user not found
