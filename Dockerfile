@@ -7,8 +7,10 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN mkdir -p uploads
+
 COPY . .
 
-EXPOSE 2002
+EXPOSE 3021
 
 CMD ["npm", "start"]
