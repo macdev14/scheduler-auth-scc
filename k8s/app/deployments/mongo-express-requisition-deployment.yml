@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mongo-express-requisition
-          image: cmerbruno/custom-mongo-express:v01
+          image: cmerbruno/custom-mongo-express:v02
           ports:
             - containerPort: 2036
           env:

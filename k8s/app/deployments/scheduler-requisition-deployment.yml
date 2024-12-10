@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: scheduler-requisition
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: scheduler-requisition
@@ -13,7 +13,7 @@ spec:
         app: scheduler-requisition
     spec:
       containers:
-        - name: app
+        - name: scheduler-requisition
           image: lmtp/scheduler-requisicoes:latest
           ports:
             - containerPort: 3023

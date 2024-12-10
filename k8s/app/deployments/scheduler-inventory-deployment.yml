@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: scheduler-inventory
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: scheduler-inventory
@@ -13,7 +13,7 @@ spec:
         app: scheduler-inventory
     spec:
       containers:
-        - name: app
+        - name: scheduler-inventory
           image: lmtp/scheduler-inventory:latest
           ports:
             - containerPort: 3024

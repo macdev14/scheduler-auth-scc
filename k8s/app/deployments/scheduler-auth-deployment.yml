@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: scheduler-auth
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: scheduler-auth
@@ -13,7 +13,7 @@ spec:
         app: scheduler-auth
     spec:
       containers:
-        - name: app
+        - name: scheduler-auth
           image: lmtp/scheduler-auth:latest
           ports:
             - containerPort: 3021

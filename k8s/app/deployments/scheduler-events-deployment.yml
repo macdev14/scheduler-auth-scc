@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: scheduler-events
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: scheduler-events
@@ -13,7 +13,7 @@ spec:
         app: scheduler-events
     spec:
       containers:
-        - name: app
+        - name: scheduler-events
           image: lmtp/scheduler-events:latest
           ports:
             - containerPort: 3022
