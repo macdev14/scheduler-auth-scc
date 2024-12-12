@@ -7,8 +7,3 @@ _docker-compose.yml
 k8s/aula
 k8s/testes
 uploads
-env-config-scheduler.env
-env-config-scheduler-auth.env
-env-config-scheduler-requisition.env
-env-config-scheduler-inventory.env
-env-config-scheduler-events.env
