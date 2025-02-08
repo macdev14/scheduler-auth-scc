@@ -1,0 +1,18 @@
+[
+    {
+      "name": "AuthDB",
+      "uri": "mongodb://mongoadmin:mongoadmin@mongo:27017/auth?authSource=admin"
+    },
+    {
+      "name": "EventsDB",
+      "uri": "mongodb://mongoadmin:mongoadmin@mongo:27017/events?authSource=admin"
+    },
+    {
+      "name": "RequisitionDB",
+      "uri": "mongodb://mongoadmin:mongoadmin@mongo:27017/requisition?authSource=admin"
+    },
+    {
+      "name": "InventoryDB",
+      "uri": "mongodb://mongoadmin:mongoadmin@mongo:27017/inventory?authSource=admin"
+    }
+  ]
