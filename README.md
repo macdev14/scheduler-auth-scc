@@ -26,4 +26,6 @@ kubectl apply -f ./k8s/app/deployments/scheduler-events-deployment.yml
 kubectl apply -f ./k8s/app/deployments/scheduler-requisition-deployment.yml
 kubectl apply -f ./k8s/app/deployments/scheduler-inventory-deployment.yml
 kubectl apply -f ./k8s/app/deployments/mongoku-deployment.yml
+kubectl apply -f ./k8s/app/deployments/kong-database.yml
+kubectl apply -f ./k8s/app/deployments/konga-deployment.yml
 kubectl get deployments
