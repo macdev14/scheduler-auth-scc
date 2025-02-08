@@ -4,6 +4,8 @@ metadata:
   name: scheduler-ingress
   annotations:
     konghq.com/strip-path: "true"
+    konghq.com/https-redirect-status-code: "301"
+    konghq.com/protocols: "http,https"
 spec:
   ingressClassName: kong
   rules:
