@@ -1,0 +1,166 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kong
+  template:
+    metadata:
+      labels:
+        app: kong
+    spec:
+      containers:
+        - name: kong
+          image: kong/kong-gateway:latest
+          env:
+            - name: KONG_DATABASE
+              value: "postgres"
+            - name: KONG_PG_HOST
+              value: "kong-database"
+            - name: KONG_PG_PORT
+              value: "5432"
+            - name: KONG_PG_USER
+              value: "kong"
+            - name: KONG_PG_PASSWORD
+              value: "kong"
+            - name: KONG_PG_DATABASE
+              value: "kong"
+          ports:
+            - containerPort: 8000
+            - containerPort: 8443
+            - containerPort: 8001
+            - containerPort: 8444
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kong-migrations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kong-migrations
+  template:
+    metadata:
+      labels:
+        app: kong-migrations
+    spec:
+      containers:
+      - name: kong-migration
+        image: kong
+        command: ["kong", "migrations", "bootstrap"]
+        env:
+        - name: KONG_DATABASE
+          value: "postgres"
+        - name: KONG_PG_HOST
+          value: kong-database
+        - name: KONG_PG_USER
+          value: kong
+        - name: KONG_PG_PASSWORD
+          value: kong
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kong
+  labels:
+    app: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kong
+  template:
+    metadata:
+      labels:
+        app: kong
+    spec:
+      containers:
+      - name: kong
+        image: kong
+        ports:
+        - containerPort: 8000  # Proxy
+        - containerPort: 8443 # Secure Proxy
+        - containerPort: 8001 # Admin API
+        - containerPort: 8444 # Secure Admin API
+        env:
+        - name: KONG_DATABASE
+          value: "postgres"
+        - name: KONG_PG_HOST
+          value: kong-database
+        - name: KONG_PG_USER
+          value: kong
+        - name: KONG_PG_PASSWORD
+          value: kong
+        - name: KONG_PROXY_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_ADMIN_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PROXY_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_LISTEN
+          value: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-proxy
+spec:
+  selector:
+    app: kong
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  - protocol: TCP
+    port: 443
+    targetPort: 8443
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: konga
+  labels:
+    app: konga
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: konga
+  template:
+    metadata:
+      labels:
+        app: konga
+    spec:
+      containers:
+      - name: konga
+        image: pantsel/konga
+        ports:
+        - containerPort: 1337
+        env:
+        - name: NODE_ENV
+          value: "production"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: konga
+spec:
+  selector:
+    app: konga
+  ports:
+  - protocol: TCP
+    port: 1337
+    targetPort: 1337
+  type: LoadBalancer
