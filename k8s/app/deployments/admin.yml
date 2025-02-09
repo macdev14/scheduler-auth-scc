@@ -9,15 +9,15 @@ manager:
   #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
   labels: {}
 
-  http:
-    # Enable plaintext HTTP listen for Kong Manager
-    enabled: true
-    servicePort: 8002
-    containerPort: 8002
-    # Set a nodePort which is available if service type is NodePort
-    # nodePort: 32080
-    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
-    parameters: []
+  # http:
+  #   # Enable plaintext HTTP listen for Kong Manager
+  #   enabled: true
+  #   servicePort: 8002
+  #   containerPort: 8002
+  #   # Set a nodePort which is available if service type is NodePort
+  #   # nodePort: 32080
+  #   # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+  #   parameters: []
 
   tls:
     # Enable HTTPS listen for Kong Manager
@@ -59,16 +59,16 @@ admin:
   #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
   labels: {}
 
-  http:
-    # Enable plaintext HTTP listen for the admin API
-    # Disabling this and using a TLS listen only is recommended for most configuration
-    enabled: true
-    servicePort: 8001
-    containerPort: 8001
-    # Set a nodePort which is available if service type is NodePort
-    # nodePort: 32080
-    # Additional listen parameters, e.g. "reuseport", "backlog=16384"
-    parameters: []
+  # http:
+  #   # Enable plaintext HTTP listen for the admin API
+  #   # Disabling this and using a TLS listen only is recommended for most configuration
+  #   enabled: true
+  #   servicePort: 8001
+  #   containerPort: 8001
+  #   # Set a nodePort which is available if service type is NodePort
+  #   # nodePort: 32080
+  #   # Additional listen parameters, e.g. "reuseport", "backlog=16384"
+  #   parameters: []
 
   tls:
     # Enable HTTPS listen for the admin API
