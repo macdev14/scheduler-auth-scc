@@ -6,10 +6,7 @@ helm install kong -n kong kong/kong
 
 helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/config-kong.yml
 
-APLICAR COMANDOS DEPLOYMENTS ANTES DO TUNNELS
-
-minikube tunnel
-
+APLICAR COMANDOS DEPLOYMENTS ANTES DO TUNNEL
 
 kubectl apply -f ./k8s/app/persistent-volume-claims/mongoku-pvc.yml
 kubectl apply -f ./k8s/app/persistent-volume-claims/scheduler-auth-pvc.yml
@@ -42,3 +39,6 @@ kubectl apply -f ./k8s/app/deployments/mongoku-deployment.yml
 kubectl apply -f ./k8s/app/deployments/scheduler-ingress.yml
 
 kubectl get deployments
+
+
+minikube tunnel
