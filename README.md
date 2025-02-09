@@ -1,4 +1,3 @@
-
 kubectl create namespace kong
 
 helm repo add kong https://charts.konghq.com
