@@ -1,24 +1,7 @@
-image:
-  repository: kong/kong-gateway
-  tag: "3.8"
-  # Kong Enterprise
-  # repository: kong/kong-gateway
-  # tag: "3.8"
-
-  # Specify a semver version if your image tag is not one (e.g. "nightly")
-  effectiveSemver:
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  # pullSecrets:
-  #   - myRegistrKeySecretName
-
 manager:
   # Enable creating a Kubernetes service for Kong Manager
   enabled: true
-  type: NodePort
+  type: LoadBalancer
   loadBalancerClass:
   # To specify annotations or labels for the Manager service, add them to the respective
   # "annotations" or "labels" dictionaries below.
@@ -45,7 +28,7 @@ manager:
     # nodePort: 32443
     # Additional listen parameters, e.g. "reuseport", "backlog=16384"
     parameters:
-    - http2
+      - http2
 
   ingress:
     # Enable/disable exposure using ingress.
@@ -61,8 +44,6 @@ manager:
     path: /
     # Each path in an Ingress is required to have a corresponding path type. (ImplementationSpecific/Exact/Prefix)
     pathType: ImplementationSpecific
-
-
 
 # Specify Kong admin API service and listener configuration
 admin:
@@ -101,7 +82,7 @@ admin:
     # nodePort: 32443
     # Additional listen parameters, e.g. "reuseport", "backlog=16384"
     parameters:
-    - http2
+      - http2
 
     # Specify the CA certificate to use for TLS verification of the Admin API client by:
     # - secretName - the secret must contain a key named "tls.crt" with the PEM-encoded certificate.
