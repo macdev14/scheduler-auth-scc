@@ -5,7 +5,7 @@ helm repo add kong https://charts.konghq.com
 
 helm install kong -n kong kong/kong
 
-helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/admin.yaml
+helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/admin.yml
 
 APLICAR COMANDOS DEPLOYMENTS ANTES DO TUNNELS
 
