@@ -1,3 +1,19 @@
+
+kubectl create namespace kong
+
+helm repo add kong https://charts.konghq.com
+
+helm install kong -n kong kong/kong
+
+helm show values kong/kong > values-default.yaml
+
+helm upgrade kong -n kong kong/kong -f admin.yaml
+
+APLICAR COMANDOS DEPLOYMENTS ANTES DO TUNNELS
+
+minikube tunnel
+
+
 kubectl apply -f ./k8s/app/persistent-volume-claims/mongoku-pvc.yml
 kubectl apply -f ./k8s/app/persistent-volume-claims/scheduler-auth-pvc.yml
 kubectl apply -f ./k8s/app/persistent-volume-claims/scheduler-inventory-pvc.yml 
@@ -28,4 +44,6 @@ kubectl apply -f ./k8s/app/deployments/scheduler-inventory-deployment.yml
 kubectl apply -f ./k8s/app/deployments/mongoku-deployment.yml
 kubectl apply -f ./k8s/app/deployments/kong-database.yml
 kubectl apply -f ./k8s/app/deployments/konga-deployment.yml
+kubectl apply -f ./k8s/app/deployments/kongo.yml
+
 kubectl get deployments
