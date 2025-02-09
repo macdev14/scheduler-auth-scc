@@ -7,6 +7,7 @@ postgresql:
     username: kong          # PostgreSQL username
     password: kong          # PostgreSQL password
     database: kong          # PostgreSQL database name
+    
   service:
     ports:
       postgresql: "5432"    # PostgreSQL service port
@@ -31,6 +32,7 @@ admin:
     containerPort: 8001
   tls:
     enabled: true
+
     servicePort: 8444
     containerPort: 8444
     sslVerify: "off"
@@ -50,8 +52,7 @@ manager:
     sslVerify: "off"
 
 # # Set secret name for PostgreSQL (if you're not using Helm-managed secrets)
-# secretName: kong-postgresql
-
+secretName: kong-postgresql
 # Enable Ingress for Admin API and Manager if you want to expose them outside the Kubernetes cluster
 # admin:
 #   ingress:

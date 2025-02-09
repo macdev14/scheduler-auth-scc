@@ -6,9 +6,7 @@ kubectl create namespace kong
 
 helm repo add kong https://charts.konghq.com
 
-helm install kong -n kong kong/kong
-
-helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/config-kong.yml
+helm install kong kong/kong -n kong -f './k8s/app/deployments/config-kong.yml'
 
 HOST=$(kubectl get svc --namespace kong kong-kong-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 PORT=$(kubectl get svc --namespace kong kong-kong-proxy -o jsonpath='{.spec.ports[0].port}')

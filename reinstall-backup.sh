@@ -16,9 +16,9 @@ kubectl create secret tls kong-manager-tls --cert=kong-manager.crt --key=kong-ma
 
 helm repo add kong https://charts.konghq.com
 
-helm install kong -n kong kong/kong
+helm install kong kong/kong -n kong -f './k8s/app/deployments/config-kong.yml'
 echo "Aguardando 15s para o deployments de cluster kong"
-sleep 30
+sleep 15
 helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/config-kong.yml
 echo "Aguardando 15s para configurar deployments de cluster kong"
 sleep 15
