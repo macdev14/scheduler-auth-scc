@@ -39,4 +39,4 @@ spec:
     - protocol: TCP
       port: 3022
       targetPort: 3022
-  type: LoadBalancer
+  type: ClusterIP

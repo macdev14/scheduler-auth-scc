@@ -19,7 +19,7 @@ spec:
             - containerPort: 3024
           volumeMounts:
             - name: uploads-storage
-              mountPath: /uploads 
+              mountPath: /uploads
           envFrom:
             - configMapRef:
                 name: env-config-scheduler-inventory
@@ -46,4 +46,4 @@ spec:
     - protocol: TCP
       port: 3024
       targetPort: 3024
-  type: LoadBalancer
+  type: ClusterIP

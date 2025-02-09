@@ -19,7 +19,7 @@ spec:
             - containerPort: 3021
           volumeMounts:
             - name: uploads-storage
-              mountPath: /uploads 
+              mountPath: /uploads
           envFrom:
             - configMapRef:
                 name: env-config-scheduler-auth
@@ -46,4 +46,4 @@ spec:
     - protocol: TCP
       port: 3021
       targetPort: 3021
-  type: LoadBalancer
+  type: ClusterIP
