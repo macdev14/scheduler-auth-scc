@@ -1,26 +1,191 @@
+# ---------------- KONG MIGRATIONS (RUN FIRST) ----------------
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: kong-migrations
 spec:
   template:
-    metadata:
-      labels:
-        app: kong-migrations
     spec:
       restartPolicy: Never
       containers:
-        - name: kong-migrations
+      - name: kong-migrations
+        image: kong/kong-gateway:latest
+        command: ["kong", "migrations", "bootstrap"]
+        env:
+        - name: KONG_DATABASE
+          value: "postgres"
+        - name: KONG_PG_HOST
+          value: "kong-database"
+        - name: KONG_PG_USER
+          value: "kong"
+        - name: KONG_PG_PASSWORD
+          value: "kong"
+        - name: KONG_PG_DATABASE
+          value: "kong"
+
+---
+# ---------------- KONG DEPLOYMENT ----------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kong
+  template:
+    metadata:
+      labels:
+        app: kong
+    spec:
+      containers:
+        - name: kong
           image: kong/kong-gateway:latest
-          command: ["kong", "migrations", "bootstrap"]
           env:
             - name: KONG_DATABASE
               value: "postgres"
             - name: KONG_PG_HOST
               value: "kong-database"
-            - name: KONG_PG_PORT
-              value: "5432"
             - name: KONG_PG_USER
               value: "kong"
             - name: KONG_PG_PASSWORD
               value: "kong"
+            - name: KONG_PROXY_ACCESS_LOG
+              value: "/dev/stdout"
+            - name: KONG_ADMIN_ACCESS_LOG
+              value: "/dev/stdout"
+            - name: KONG_PROXY_ERROR_LOG
+              value: "/dev/stderr"
+            - name: KONG_ADMIN_ERROR_LOG
+              value: "/dev/stderr"
+            - name: KONG_ADMIN_LISTEN
+              value: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+          ports:
+            - containerPort: 8000
+            - containerPort: 8443
+            - containerPort: 8001
+            - containerPort: 8444
+
+---
+# ---------------- KONG PROXY SERVICE ----------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-proxy
+spec:
+  selector:
+    app: kong
+  ports:
+    - name: proxy-http
+      protocol: TCP
+      port: 80
+      targetPort: 8000
+    - name: proxy-https
+      protocol: TCP
+      port: 443
+      targetPort: 8443
+  type: LoadBalancer
+
+---
+# ---------------- KONG ADMIN SERVICE ----------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-admin
+spec:
+  selector:
+    app: kong
+  ports:
+    - name: admin-http
+      protocol: TCP
+      port: 8001
+      targetPort: 8001
+    - name: admin-https
+      protocol: TCP
+      port: 8444
+      targetPort: 8444
+  type: LoadBalancer
+
+---
+# ---------------- KONGA MIGRATIONS (RUN FIRST) ----------------
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: konga-migrations
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: konga-migrations
+        image: pantsel/konga
+        command: ["node", "/app/bin/konga.js", "db", "migrate"]
+        env:
+          - name: NODE_ENV
+            value: "production"
+          - name: DB_ADAPTER
+            value: "postgres"
+          - name: DB_HOST
+            value: "kong-database"
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            value: "kong"
+          - name: DB_PASSWORD
+            value: "kong"
+          - name: DB_DATABASE
+            value: "konga"
+
+---
+# ---------------- KONGA DEPLOYMENT ----------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: konga
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: konga
+  template:
+    metadata:
+      labels:
+        app: konga
+    spec:
+      containers:
+        - name: konga
+          image: pantsel/konga
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: DB_ADAPTER
+              value: "postgres"
+            - name: DB_HOST
+              value: "kong-database"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              value: "kong"
+            - name: DB_PASSWORD
+              value: "kong"
+            - name: DB_DATABASE
+              value: "konga"
+          ports:
+            - containerPort: 1337
+
+---
+# ---------------- KONGA SERVICE ----------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: konga
+spec:
+  selector:
+    app: konga
+  ports:
+    - name: konga-ui
+      protocol: TCP
+      port: 1337
+      targetPort: 1337
+  type: LoadBalancer
