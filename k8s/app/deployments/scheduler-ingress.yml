@@ -5,12 +5,11 @@ metadata:
   annotations:
     konghq.com/strip-path: "true"
     konghq.com/https-redirect-status-code: "301"
-    konghq.com/protocols: "http,https"
+    konghq.com/protocols: "https"
 spec:
   ingressClassName: kong
   rules:
-    - host: localhost
-      http:
+    - http:
         paths:
           - path: /auth
             pathType: Prefix

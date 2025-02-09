@@ -5,7 +5,7 @@ helm repo add kong https://charts.konghq.com
 
 helm install kong -n kong kong/kong
 
-helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/admin.yml
+helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/config-kong.yml
 
 APLICAR COMANDOS DEPLOYMENTS ANTES DO TUNNELS
 
@@ -40,8 +40,6 @@ kubectl apply -f ./k8s/app/deployments/scheduler-events-deployment.yml
 kubectl apply -f ./k8s/app/deployments/scheduler-requisition-deployment.yml
 kubectl apply -f ./k8s/app/deployments/scheduler-inventory-deployment.yml
 kubectl apply -f ./k8s/app/deployments/mongoku-deployment.yml
-kubectl apply -f ./k8s/app/deployments/kong-database.yml
-kubectl apply -f ./k8s/app/deployments/konga-deployment.yml
-kubectl apply -f ./k8s/app/deployments/kongo.yml
+kubectl apply -f ./k8s/app/deployments/scheduler-ingress.yml
 
 kubectl get deployments
