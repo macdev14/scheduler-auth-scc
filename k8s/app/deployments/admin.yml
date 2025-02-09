@@ -29,6 +29,9 @@ manager:
     # Additional listen parameters, e.g. "reuseport", "backlog=16384"
     parameters:
       - http2
+    # Disable SSL verification for Kong Admin
+    sslVerify: "off"
+
 
   ingress:
     # Enable/disable exposure using ingress.
