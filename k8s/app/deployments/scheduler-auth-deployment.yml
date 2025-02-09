@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scheduller-auth
+  name: scheduler-auth
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
-      app: scheduller-auth
+      app: scheduler-auth
   template:
     metadata:
       labels:
-        app: scheduller-auth
+        app: scheduler-auth
     spec:
       containers:
-        - name: app
+        - name: scheduler-auth
           image: lmtp/scheduler-auth:latest
           ports:
-            - containerPort: 2002
+            - containerPort: 3021
           volumeMounts:
             - name: uploads-storage
-              mountPath: /uploads 
+              mountPath: /uploads
           envFrom:
             - configMapRef:
-                name: env-config-scheduler
+                name: env-config-scheduler-auth
           resources:
             requests:
               memory: "256Mi"
@@ -38,12 +38,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: scheduller-auth-service
+  name: scheduler-auth-service
 spec:
   selector:
-    app: scheduller-auth
+    app: scheduler-auth
   ports:
     - protocol: TCP
-      port: 2002
-      targetPort: 2002
-  type: LoadBalancer
+      port: 3021
+      targetPort: 3021
+  type: ClusterIP

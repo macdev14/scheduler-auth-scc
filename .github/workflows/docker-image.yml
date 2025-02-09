@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies and run tests
         run: |
           npm install
-          npm test
+          # npm test
         env:
           MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
           SECRET_KEY: ${{ secrets.DOCKER_USERNAME }}

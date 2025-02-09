@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: scheduller-requisitions
+  name: scheduler-requisition
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
-      app: scheduller-requisitions
+      app: scheduler-requisition
   template:
     metadata:
       labels:
-        app: scheduller-requisitions
+        app: scheduler-requisition
     spec:
       containers:
-        - name: app
+        - name: scheduler-requisition
           image: lmtp/scheduler-requisicoes:latest
           ports:
-            - containerPort: 2003
+            - containerPort: 3023
           envFrom:
             - configMapRef:
                 name: env-config-scheduler-requisition
@@ -31,12 +31,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: scheduller-requisitions-service
+  name: scheduler-requisition-service
 spec:
   selector:
-    app: scheduller-requisitions
+    app: scheduler-requisition
   ports:
     - protocol: TCP
-      port: 2003
-      targetPort: 2003
-  type: LoadBalancer
+      port: 3023
+      targetPort: 3023
+  type: ClusterIP
