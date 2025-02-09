@@ -14,14 +14,6 @@ openssl req -newkey rsa:2048 -nodes -keyout kong-manager.key -x509 -days 365 -ou
 
 kubectl create secret tls kong-manager-tls --cert=kong-manager.crt --key=kong-manager.key --namespace kong
 
-kubectl create secret generic kong-postgresql \
-  --from-literal=postgres-password=mysecretpassword \
-  --from-literal=kong-password=mykongpassword \
-  --from-literal=postgres-user=kong \
-  --from-literal=postgres-database=kong \
-  --namespace kong
-
-
 helm repo add kong https://charts.konghq.com
 
 helm install kong -n kong kong/kong
