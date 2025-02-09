@@ -4,6 +4,7 @@ metadata:
   name: scheduler-ingress
   annotations:
     konghq.com/strip-path: "true"
+    konghq.com/protocols: "https"
 spec:
   ingressClassName: kong
   rules:
