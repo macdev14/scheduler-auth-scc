@@ -18,7 +18,7 @@ helm repo add kong https://charts.konghq.com
 
 helm install kong -n kong kong/kong
 echo "Aguardando 15s para o deployments de cluster kong"
-sleep 15
+sleep 30
 helm upgrade kong -n kong kong/kong -f ./k8s/app/deployments/config-kong.yml
 echo "Aguardando 15s para configurar deployments de cluster kong"
 sleep 15
