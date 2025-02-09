@@ -36,7 +36,19 @@ admin:
     servicePort: 8444
     containerPort: 8444
     sslVerify: "off"
-    
+    secretName: kong-admin-tls
+
+metrics:
+  enabled: true  # Enables Prometheus metrics
+  serviceMonitor:
+    enabled: true  # If using Prometheus Operator
+  prometheus:
+    enabled: true
+
+proxy:
+  metrics:
+    enabled: true
+    port: 8100  # Default Kong Prometheus port
 
 manager:
   enabled: true
@@ -50,6 +62,7 @@ manager:
     servicePort: 8445
     containerPort: 8445
     sslVerify: "off"
+    secretName: kong-manager-tls
 
 # # Set secret name for PostgreSQL (if you're not using Helm-managed secrets)
 secretName: kong-postgresql
